@@ -1,7 +1,5 @@
 #include <nastya/object_type.hpp>
 
-#include <nastya/object.hpp>
-
 namespace nastya
 {
     bool is_numeric(ObjectType type)
@@ -23,4 +21,32 @@ namespace nastya
     {
         return type == ObjectType::Lambda;
     }
+
+    std::ostream& operator<<(std::ostream& os, ObjectType type)
+    {
+        switch (type) {
+            case ObjectType::Object:
+                os << "Object";
+                break;
+            case ObjectType::Integer:
+                os << "Integer";
+                break;
+            case ObjectType::Float:
+                os << "Float";
+                break;
+            case ObjectType::String:
+                os << "String";
+                break;
+            case ObjectType::List:
+                os << "List";
+                break;
+            case ObjectType::Lambda:
+                os << "Lambda";
+                break;
+            default:
+                os << "Unknown";
+        }
+        return os;
+    }
+
 }

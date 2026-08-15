@@ -10,7 +10,7 @@ namespace nastya
             // TODO: Implement list computation logic here
             throw std::runtime_error("List computation not implemented yet.");
         }
-        else if (is_numeric(obj.getType())) {
+        else if (is_primitive(obj.getType())) {
             return obj;
         }
         else {

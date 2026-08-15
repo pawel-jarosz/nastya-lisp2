@@ -1,5 +1,6 @@
 add_library(nastya STATIC
         machine.cpp
+        object.cpp
         object_type.cpp)
 target_include_directories(nastya PUBLIC ${NASTYA_INCLUDE_DIR})
 

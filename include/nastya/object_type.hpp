@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 namespace nastya
 {
     enum class ObjectType {
@@ -10,6 +12,8 @@ namespace nastya
             List,
             Lambda
     };
+
+    std::ostream& operator<<(std::ostream& os, ObjectType type);
 
     bool is_numeric(ObjectType type);
     bool is_primitive(ObjectType type);
