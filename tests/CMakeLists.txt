@@ -1,5 +1,9 @@
-add_executable(compute_primitives compute_primitives.cpp)
-target_link_libraries(compute_primitives nastya GTest::gmock_main)
+add_executable(compute_basic_types compute_basic_types.cpp)
+target_link_libraries(compute_basic_types nastya GTest::gmock_main)
+
+add_executable(atomic_computation_test compute_atomics_type.cpp)
+target_link_libraries(atomic_computation_test nastya GTest::gmock_main)
 
 include(GoogleTest)
-gtest_discover_tests(compute_primitives)
+gtest_discover_tests(compute_basic_types)
+gtest_discover_tests(atomic_computation_test)

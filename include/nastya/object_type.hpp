@@ -6,6 +6,7 @@ namespace nastya
 {
     enum class ObjectType {
             Object,
+            Atom,
             Integer,
             Float,
             String,
@@ -17,6 +18,7 @@ namespace nastya
 
     bool is_numeric(ObjectType type);
     bool is_primitive(ObjectType type);
+    bool is_atomic(ObjectType type);
     bool is_list(ObjectType type);
     bool is_callable(ObjectType type);
 }

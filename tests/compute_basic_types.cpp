@@ -1,3 +1,11 @@
+#include <gtest/gtest.h>
+
+#include <nastya/machine.hpp>
+#include <nastya/object.hpp>
+
+namespace nastya
+{
+
 /*
 Feature: Compute primitive objects
 
@@ -11,15 +19,7 @@ Feature: Compute primitive objects
       | "abc" | String => "abc"   |
       | 2     | Integer => 2      |
       | 2.0   | Float => 2.000000 |
-*/
-
-#include <gtest/gtest.h>
-
-#include <nastya/machine.hpp>
-#include <nastya/object.hpp>
-
-namespace nastya
-{
+*/  
     TEST(ComputePrimitives, ComputesString)
     {
         Machine machine;
@@ -55,4 +55,5 @@ namespace nastya
         EXPECT_EQ(result.getType(), ObjectType::Float);
         EXPECT_EQ(result.toString(), "Float => 2.000000");
     }
+    
 }

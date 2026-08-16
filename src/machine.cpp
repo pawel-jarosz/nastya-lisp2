@@ -13,6 +13,10 @@ namespace nastya
         else if (is_primitive(obj.getType())) {
             return obj;
         }
+        else if (is_atomic(obj.getType())) {
+
+            return dynamic_cast<const AtomObject&>(obj).getValue();
+        }
         else {
             throw std::runtime_error("Unhandled object type.");
         }

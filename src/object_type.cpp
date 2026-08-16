@@ -7,6 +7,11 @@ namespace nastya
         return (type == ObjectType::Integer || type == ObjectType::Float);
     }
 
+    bool is_atomic(ObjectType type)
+    {
+        return (type == ObjectType::Atom);
+    }
+
     bool is_primitive(ObjectType type)
     {
         return (type == ObjectType::Integer || type == ObjectType::Float || type == ObjectType::String) ;
@@ -27,6 +32,9 @@ namespace nastya
         switch (type) {
             case ObjectType::Object:
                 os << "Object";
+                break;
+            case ObjectType::Atom:
+                os << "Atom";
                 break;
             case ObjectType::Integer:
                 os << "Integer";
