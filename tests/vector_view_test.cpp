@@ -32,11 +32,17 @@ Feature: Access vectors and non-owning subvector views
     When another view is created from it at offset 1
     Then the nested view contains 30 and 40
     And its offset relative to its source is 1
+
+  Scenario: Represent a list using a subvector view
+    Given an owning object vector containing 10, 20, and 30
+    When a ListObject is constructed from its subvector at offset 1
+    Then the list contains 20 and 30 without copying the objects
 */
 
 #include <gtest/gtest.h>
 
 #include <nastya/vector_view.hpp>
+#include <nastya/object.hpp>
 
 #include <memory>
 #include <vector>
@@ -121,3 +127,34 @@ TEST(ObjectsSubvectorViewTest, SupportsNestedViews)
 }
 
 } // namespace nastya::data_structures
+
+namespace nastya {
+
+TEST(ListObjectTest, UsesOwningVectorByDefault)
+{
+    ListObject list;
+    list.addElement(std::make_unique<IntegerObject>(1));
+    list.addElement(std::make_unique<IntegerObject>(2));
+
+    EXPECT_EQ(list.getElements().size(), 2U);
+    EXPECT_EQ(list.toString(), "List => [Integer => 1, Integer => 2]");
+}
+
+TEST(ListObjectTest, UsesSubvectorViewWithoutCopyingObjects)
+{
+    std::vector<UObjectPtr> elements;
+    elements.push_back(std::make_unique<IntegerObject>(10));
+    elements.push_back(std::make_unique<IntegerObject>(20));
+    elements.push_back(std::make_unique<IntegerObject>(30));
+    data_structures::ObjectsVector<UObjectPtr> objects(std::move(elements));
+    data_structures::ObjectsSubvectorView<UObjectPtr> suffix(objects, 1);
+
+    ListObject list(suffix);
+
+    EXPECT_EQ(list.getElements().size(), 2U);
+    EXPECT_EQ(&list.getElements()[0], &objects[1]);
+    EXPECT_EQ(&list.getElements()[1], &objects[2]);
+    EXPECT_EQ(list.toString(), "List => [Integer => 20, Integer => 30]");
+}
+
+} // namespace nastya

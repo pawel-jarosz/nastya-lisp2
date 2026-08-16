@@ -3,9 +3,10 @@
 #include <utility>
 #include <memory>
 #include <string>
-#include <vector>
+#include <variant>
 
 #include <nastya/object_type.hpp>
+#include <nastya/vector_view.hpp>
     
 namespace nastya
 {
@@ -62,12 +63,25 @@ namespace nastya
     class ListObject : public Object {
     public:
         ListObject() = default;
-        void addElement(UObjectPtr element) { elements_.emplace_back(std::move(element)); }
+        explicit ListObject(data_structures::ObjectsSubvectorView<UObjectPtr> elements)
+            : elements_(std::move(elements)) {}
+        void addElement(UObjectPtr element) {
+            std::get<data_structures::ObjectsVector<UObjectPtr>>(elements_)
+                .push_back(std::move(element));
+        }
         ObjectType getType() const override { return ObjectType::List; }
         std::string toString() const override;
-        std::vector<UObjectPtr>& getElements() { return elements_; }
+        const data_structures::GenericObjectList<UObjectPtr>& getElements() const {
+            return std::visit(
+                [](const auto& elements) -> const data_structures::GenericObjectList<UObjectPtr>& {
+                    return elements;
+                },
+                elements_);
+        }
     private:
-        std::vector<UObjectPtr> elements_;
+        std::variant<
+            data_structures::ObjectsVector<UObjectPtr>,
+            data_structures::ObjectsSubvectorView<UObjectPtr>> elements_;
     };
 
     namespace lists {

@@ -29,9 +29,10 @@ namespace nastya
     std::string ListObject::toString() const {
         std::stringstream ss;
         ss << "List => [";
-        for (size_t i = 0; i < elements_.size(); ++i) {
-            ss << elements_[i]->toString();
-            if (i < elements_.size() - 1) {
+        const auto& elements = getElements();
+        for (size_t i = 0; i < elements.size(); ++i) {
+            ss << elements[i]->toString();
+            if (i < elements.size() - 1) {
                 ss << ", ";
             }
         }
