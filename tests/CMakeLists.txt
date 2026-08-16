@@ -4,6 +4,10 @@ target_link_libraries(compute_basic_types nastya GTest::gmock_main)
 add_executable(atomic_computation_test compute_atomics_type.cpp)
 target_link_libraries(atomic_computation_test nastya GTest::gmock_main)
 
+add_executable(vector_view_test vector_view_test.cpp)
+target_link_libraries(vector_view_test nastya GTest::gmock_main)
+
 include(GoogleTest)
 gtest_discover_tests(compute_basic_types)
 gtest_discover_tests(atomic_computation_test)
+gtest_discover_tests(vector_view_test)
